@@ -145,12 +145,13 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[1] & 0x0F;
       if (length == 2 && calc_crc8(this->rx_data, length + 3) == 0x00) {
         ESP_LOGVV(TAG, "Broadcast: %s", print_data(this->rx_data, 0, 5));
+        ESP_LOGI(TAG, "Broadcast: %s", print_data(this->rx_data, 0, 5));
         ESP_LOGV(TAG, "->      Broadcast");
         this->broadcast_status = this->rx_data[2];
         this->broadcast_status |= (uint16_t)this->rx_data[3] << 8;
       }
     }
-    // Broadcast status E2 (only 4 byte, pad the broadcast message )
+    // Broadcast status E2 (only 4 byte)
     // 00 01 02 CA
     if (this->rx_data[1] == BROADCAST_ADDR) {
       length = this->rx_data[2] & 0x0F;
