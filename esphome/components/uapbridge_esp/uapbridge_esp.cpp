@@ -121,6 +121,7 @@ void UAPBridge_esp::receive() {
   if (newData) {
     ESP_LOGVV(TAG, "new data received");
     ESP_LOGVV(TAG, "Just printed: %s", print_data(this->rx_data, 0, 5));
+    ESP_LOGI(TAG, "Just printed: %s", print_data(this->rx_data, 0, 5));
     newData = false;
     // Slave scan
     // 28 82 01 80 06
