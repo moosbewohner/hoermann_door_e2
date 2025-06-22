@@ -156,7 +156,7 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[2] & 0x0F;
       if ( length == 1 && calc_crc8(&this->rx_data[1], length + 3) == 0x00) {
         ESP_LOGVV(TAG, "Broadcast E2: %s", print_data(this->rx_data, 1, 5));
-     //   ESP_LOGI(TAG, "Broadcast E2: %s", print_data(this->rx_data, 1, 5)); //Added for debugging E2
+        ESP_LOGI(TAG, "Broadcast E2: %s", print_data(this->rx_data, 1, 5)); //Added for debugging E2
         ESP_LOGV(TAG, "->      Broadcast");
         this->broadcast_status = this->rx_data[3];
       }
