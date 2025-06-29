@@ -121,7 +121,6 @@ void UAPBridge_esp::receive() {
   if (newData) {
     ESP_LOGVV(TAG, "new data received");
     ESP_LOGVV(TAG, "Just printed: %s", print_data(this->rx_data, 0, 5));
-    ESP_LOGI(TAG, "Just printed: %s", print_data(this->rx_data, 0, 5));
     newData = false;
     // Slave scan
     // 28 82 01 80 06
@@ -129,7 +128,6 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[1] & 0x0F;
       if (this->rx_data[2] == CMD_SLAVE_SCAN && this->rx_data[3] == UAP1_ADDR_MASTER && length == 2 && calc_crc8(this->rx_data, length + 3) == 0x00) {
         ESP_LOGVV(TAG, "SlaveScan: %s", print_data(this->rx_data, 0, 5));
-	ESP_LOGI(TAG, "SlaveScan: %s", print_data(this->rx_data, 0, 5));
         ESP_LOGV(TAG, "->      SlaveScan"); 
         counter = (this->rx_data[1] & 0xF0) + 0x10;
         this->tx_data[0] = UAP1_ADDR_MASTER;
@@ -147,7 +145,6 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[1] & 0x0F;
       if (length == 2 && calc_crc8(this->rx_data, length + 3) == 0x00) {
         ESP_LOGVV(TAG, "Broadcast: %s", print_data(this->rx_data, 0, 5));
-        ESP_LOGI(TAG, "Broadcast E3: %s", print_data(this->rx_data, 0, 5));
         ESP_LOGV(TAG, "->      Broadcast");
         this->broadcast_status = this->rx_data[2];
         this->broadcast_status |= (uint16_t)this->rx_data[3] << 8;
@@ -159,7 +156,6 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[2] & 0x0F;
       if ( length == 1 && calc_crc8(&this->rx_data[1], length + 3) == 0x00) {
         ESP_LOGVV(TAG, "Broadcast E2: %s", print_data(this->rx_data, 1, 5));
-        ESP_LOGI(TAG, "Broadcast E2: %s", print_data(this->rx_data, 1, 5)); //Added for debugging E2
         ESP_LOGV(TAG, "->      Broadcast");
         this->broadcast_status = this->rx_data[3];
       }
@@ -170,7 +166,6 @@ void UAPBridge_esp::receive() {
       length = this->rx_data[2] & 0x0F;
       if (this->rx_data[3] == CMD_SLAVE_STATUS_REQUEST && length == 1 && calc_crc8(&this->rx_data[1], length + 3) == 0x00) {
         ESP_LOGVV(TAG, "Slave status request: %s", print_data(this->rx_data, 1, 5));
-	ESP_LOGI(TAG, "Slave status request: %s", print_data(this->rx_data, 1, 5));
         ESP_LOGV(TAG, "->      Slave status request");
         counter = (this->rx_data[2] & 0xF0) + 0x10;
         this->tx_data[0] = UAP1_ADDR_MASTER;
