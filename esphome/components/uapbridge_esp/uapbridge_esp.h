@@ -73,6 +73,7 @@ class UAPBridge_esp : public esphome::uapbridge::UAPBridge {
     uint32_t last_call       = 0;
     uint32_t last_call_slow   = 0;
     uint16_t broadcast_status = 0;
+    uint16_t last_logged_broadcast_status = 0xFFFF;  // sentinel: forces first loop_slow log
     bool ignore_next_event = false;     // will also ignore wrong edge detection after reset
     bool auto_correction_in_progress = false;
     uint8_t    rx_data[5]       = {0, 0, 0, 0, 0};
